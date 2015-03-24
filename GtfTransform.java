@@ -23,6 +23,12 @@ public class GtfTransform {
             String line = input.nextLine();     // read next line
             String[] row = line.split("\\t");   // split line by tab
 
+            // If prefix of transcriptID is "NR" or "XR", means this is noncoding gene, then skip
+            String transcriptID = row[1];
+            if(transcriptID.substring(0,2).equals("NR") || transcriptID.substring(0,2).equals("XR")) {
+                continue;
+            }
+
             int exonNumber = Integer.parseInt(row[8]);      // get exon number
             String[] startCoos = row[9].split(",");         // get the array of exon start coordinates
             String[] endCoos = row[10].split(",");          // get the array of exon end coordinates
@@ -34,8 +40,6 @@ public class GtfTransform {
 
             for(int i = 0; i<exonNumber; i++) {
                 Exon comingExon = new Exon();
-                // get the bin number, it is using to sort genes in gtf file
-                comingExon.bin = Integer.parseInt(row[0]);
                 comingExon.chr = row[2];                                // get chromosome name
                 comingExon.name = "hg19_refGene";                       // source feature from GTF field
                 comingExon.type = "exon";                               // the name of type of the feature
@@ -82,7 +86,7 @@ public class GtfTransform {
         ArrayList<Gene> genomeList = new ArrayList(genome.values());
         Collections.sort(genomeList, new Comparator<Gene>() {
            public int compare(Gene g1, Gene g2) {
-               return g1.exons.get(0).bin.compareTo(g2.exons.get(0).bin);
+               return g1.exons.get(0).chr.compareTo(g2.exons.get(0).chr);
            }
         });
 

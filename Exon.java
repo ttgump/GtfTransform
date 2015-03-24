@@ -2,7 +2,6 @@
  * Created by tiantian on 2/24/15.
  */
 public class Exon {
-    public Integer bin;
     public String chr;
     public String name;
     public String type;
