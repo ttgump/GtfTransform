@@ -51,8 +51,8 @@ public class GtfTransform {
                 comingExon.score = "0.0";                               // score
                 // frame for coding exon. We don't need the frame information here, so set all frame to "."
                 comingExon.frameRead = ".";
-                comingExon.attribute = "gene_id \"" + row[12] + "@" + row[2] +
-                        "\"; transcript_id \"" + row[12] + "@" + row[2] + "\";";
+                comingExon.attribute = "gene_id \"" + row[12] +
+                        "\"; transcript_id \"" + row[12] + "\";";
 
                 // assert start coordinate is smaller than end coordinate
                 if (comingExon.startCo.compareTo(comingExon.endCo) >= 0) {
@@ -62,7 +62,7 @@ public class GtfTransform {
 
                 // If the current exon belongs to a new gene
                 // then create the gene and add it to the genome
-                int symbolHash = (row[12]+row[2]).hashCode();
+                int symbolHash = (row[12]+"@"+row[2]).hashCode();
                 if (!genome.containsKey(symbolHash)) {
                     Gene newGene = new Gene();
                     newGene.exons.add(comingExon);
