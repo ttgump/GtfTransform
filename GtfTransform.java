@@ -120,6 +120,13 @@ public class GtfTransform {
     public static void mergeExons(Gene g) {
         // Test if the given gene has at least exon
         if(g.exons.size() <= 0) return;
+        // test if all exons are on same chromosome
+        boolean flag = true;
+        for(int i = 1; i < g.exons.size(); i++) {
+            if(!g.exons.get(i).chr.equals(g.exons.get(0).chr))
+                flag = false;
+        }
+        if(!flag) throw new AssertionError();
 
         // Create an empty stack of intervals
         Stack<Exon> s = new Stack<Exon>();
