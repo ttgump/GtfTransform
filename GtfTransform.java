@@ -19,6 +19,7 @@ public class GtfTransform {
 
         HashMap<Integer, Gene> genome = new HashMap<Integer, Gene>();   // Here key is the hash value of the string of gene symbol
 
+        int count = 0;
         while(true) {
             String line = input.nextLine();     // read next line
             String[] row = line.split("\\t");   // split line by tab
@@ -26,6 +27,7 @@ public class GtfTransform {
             // If prefix of transcriptID is "NR" or "XR", means this is noncoding gene, then skip
             String transcriptID = row[1];
             if(transcriptID.substring(0,2).equals("NR") || transcriptID.substring(0,2).equals("XR")) {
+                count++;
                 continue;
             }
 
@@ -47,7 +49,7 @@ public class GtfTransform {
                 comingExon.endCo = Long.parseLong(endCoos[i]);          // end coordinate
                 comingExon.strand = row[3];                             // strand
                 comingExon.score = "0.0";                               // score
-                // frame for coding exon. We don't need the frame information here, so set all fram to "."
+                // frame for coding exon. We don't need the frame information here, so set all frame to "."
                 comingExon.frameRead = ".";
                 comingExon.attribute = "gene_id \"" + row[12] + "\"; transcript_id \"" + row[12] + "\";";
 
@@ -76,6 +78,7 @@ public class GtfTransform {
         }
 
         input.close();
+        System.out.print("Number of non-coding genes in refSeq: " + count);
 
         // merge exon by its coordinates
         for(Gene gene : genome.values()) {
