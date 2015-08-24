@@ -79,7 +79,7 @@ public class GtfTransform {
         }
 
         input.close();
-        System.out.print("Number of non-coding genes in refSeq: " + count);
+        System.out.println("Number of non-coding genes in refSeq: " + count);
 
         // merge exon by its coordinates
         for(Gene gene : genome.values()) {
@@ -102,6 +102,7 @@ public class GtfTransform {
             output.flush();
         }
         output.close();
+        System.out.println("Number of genes in refSeq: " + genomeList.size());
     }
 
     /**
