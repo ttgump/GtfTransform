@@ -27,8 +27,10 @@ public class GtfTransform {
             // If prefix of transcriptID is "NR" or "XR", means this is noncoding gene, then skip
             String transcriptID = row[1];
             if(transcriptID.substring(0,2).equals("NR") || transcriptID.substring(0,2).equals("XR")) {
-                count++;
-                continue;
+                if(row[12].length() >=3 && !row[12].substring(0,3).equals("MIR")) { // include microRNA genes, in refSeq names of microRNA begin with "MIR"
+                    count++;
+                    continue;
+                }
             }
 
             int exonNumber = Integer.parseInt(row[8]);      // get exon number
